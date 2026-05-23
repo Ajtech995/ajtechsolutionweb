@@ -1,17 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Menu, X, Star, BadgeCheck, Clock, MapPin, Languages, ShoppingBag,
   Palette, Plug, Search, TrendingUp, Megaphone, ArrowRight, Mail,
-  Instagram, MessageCircle, ExternalLink, Globe,
+  Instagram, MessageCircle, ExternalLink, Globe, ChevronDown, Sun, Moon, ArrowUp, ArrowDown, Check, Loader2,
 } from "lucide-react";
-import profileImg from "@/assets/profile.jpg";
+import profileImg from "@/assets/profile-aj.jpeg";
 import p1 from "@/assets/project-1.jpg";
 import p2 from "@/assets/project-2.jpg";
 import p3 from "@/assets/project-3.jpg";
 import p4 from "@/assets/project-4.jpg";
 import p5 from "@/assets/project-5.jpg";
 import p6 from "@/assets/project-6.jpg";
+import r1 from "@/assets/review-1.jpg";
+import r2 from "@/assets/review-2.jpg";
+import r3 from "@/assets/review-3.jpg";
+import r4 from "@/assets/review-4.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -41,10 +45,10 @@ const projects = [
 ];
 
 const testimonials = [
-  { name: "Sarah M.", role: "Founder, Luxe Fashion House", quote: "AJ rebuilt our entire store in two weeks. Sales nearly tripled. He's the most reliable developer I've worked with." },
-  { name: "David K.", role: "CEO, Premiut Electronics", quote: "Pixel-perfect, fast and obsessed with conversion. Communication was 10/10 — answered within minutes every time." },
-  { name: "Amélie R.", role: "Co-founder, Sereniskin", quote: "He understood our brand instantly. The new Shopify build looks like a luxury site and converts like one." },
-  { name: "Tomiwa A.", role: "Owner, Ergasy Organics", quote: "Worth every dollar. Our store is faster, ranks better and looks beautiful on mobile. Highly recommended." },
+  { name: "Sarah M.", role: "Founder, Luxe Fashion House", img: r1, quote: "AJ rebuilt our entire store in two weeks. Sales nearly tripled. He's the most reliable developer I've worked with." },
+  { name: "David K.", role: "CEO, Premiut Electronics", img: r2, quote: "Pixel-perfect, fast and obsessed with conversion. Communication was 10/10 — answered within minutes every time." },
+  { name: "Amélie R.", role: "Co-founder, Sereniskin", img: r3, quote: "He understood our brand instantly. The new Shopify build looks like a luxury site and converts like one." },
+  { name: "Tomiwa A.", role: "Owner, Ergasy Organics", img: r4, quote: "Worth every dollar. Our store is faster, ranks better and looks beautiful on mobile. Highly recommended." },
 ];
 
 const locations = ["Nigeria", "USA", "UK", "France", "Canada", "Australia", "Dubai", "Egypt"];
@@ -56,6 +60,27 @@ const navLinks = [
   { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
+
+const LANGS = [
+  { code: "en", label: "English", flag: "🇬🇧" },
+  { code: "fr", label: "Français", flag: "🇫🇷" },
+  { code: "es", label: "Español", flag: "🇪🇸" },
+  { code: "nl", label: "Nederlands", flag: "🇳🇱" },
+  { code: "el", label: "Ελληνικά", flag: "🇬🇷" },
+  { code: "tr", label: "Türkçe", flag: "🇹🇷" },
+  { code: "it", label: "Italiano", flag: "🇮🇹" },
+];
+
+type Lang = typeof LANGS[number]["code"];
+const T: Record<Lang, { hire: string; tagline: string; enquiry: string; send: string; fiverr: string }> = {
+  en: { hire: "Hire Me", tagline: "Let's scale up your business together. AJ is ready to support you and make your ideas become impact.", enquiry: "Send a project enquiry", send: "Send Enquiry", fiverr: "View Fiverr Profile" },
+  fr: { hire: "Engagez-moi", tagline: "Faisons grandir votre entreprise ensemble. AJ est prêt à transformer vos idées en impact réel.", enquiry: "Envoyer une demande de projet", send: "Envoyer", fiverr: "Voir mon profil Fiverr" },
+  es: { hire: "Contrátame", tagline: "Escalemos tu negocio juntos. AJ está listo para convertir tus ideas en impacto real.", enquiry: "Enviar una consulta de proyecto", send: "Enviar consulta", fiverr: "Ver perfil de Fiverr" },
+  nl: { hire: "Huur Mij In", tagline: "Laten we samen je bedrijf laten groeien. AJ helpt jouw ideeën impact maken.", enquiry: "Projectaanvraag versturen", send: "Versturen", fiverr: "Bekijk Fiverr-profiel" },
+  el: { hire: "Προσλάβετέ με", tagline: "Ας αναπτύξουμε μαζί την επιχείρησή σας. Ο AJ είναι έτοιμος να μετατρέψει τις ιδέες σας σε αποτέλεσμα.", enquiry: "Στείλτε αίτημα έργου", send: "Αποστολή", fiverr: "Προφίλ Fiverr" },
+  tr: { hire: "Beni İşe Al", tagline: "İşinizi birlikte büyütelim. AJ, fikirlerinizi etkiye dönüştürmeye hazır.", enquiry: "Proje talebi gönder", send: "Gönder", fiverr: "Fiverr Profilini Gör" },
+  it: { hire: "Assumimi", tagline: "Facciamo crescere il tuo business insieme. AJ è pronto a trasformare le tue idee in impatto.", enquiry: "Invia una richiesta di progetto", send: "Invia richiesta", fiverr: "Vedi profilo Fiverr" },
+};
 
 function Stars({ count = 5 }: { count?: number }) {
   return (
