@@ -380,15 +380,34 @@ function Index() {
 
           {/* Form */}
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              const f = new FormData(e.currentTarget);
-              const body = `Hi AJ,%0A%0A${encodeURIComponent(String(f.get("message") ?? ""))}%0A%0A— ${encodeURIComponent(String(f.get("name") ?? ""))}`;
-              window.location.href = `mailto:${EMAIL}?subject=Project enquiry from ${encodeURIComponent(String(f.get("name") ?? ""))}&body=${body}`;
+              const form = e.currentTarget;
+              const data = new FormData(form);
+              setFormStatus("sending");
+              try {
+                const res = await fetch(`https://formsubmit.co/ajax/${EMAIL}`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json", Accept: "application/json" },
+                  body: JSON.stringify({
+                    name: data.get("name"),
+                    email: data.get("email"),
+                    budget: data.get("budget"),
+                    message: data.get("message"),
+                    _subject: `New project enquiry from ${data.get("name")}`,
+                    _template: "table",
+                  }),
+                });
+                if (!res.ok) throw new Error("Failed");
+                setFormStatus("sent");
+                form.reset();
+              } catch {
+                setFormStatus("error");
+              }
             }}
             className="lg:col-span-3 rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-4 shadow-soft"
           >
-            <h3 className="text-lg font-bold">Send a project enquiry</h3>
+            <h3 className="text-lg font-bold">{t.enquiry}</h3>
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Name" name="name" placeholder="Your full name" required />
               <Field label="Email" name="email" type="email" placeholder="you@company.com" required />
@@ -398,9 +417,17 @@ function Index() {
               <label className="text-xs font-semibold text-foreground/80">Tell me about your project</label>
               <textarea name="message" required rows={5} placeholder="Share your goals, timeline and platform (Shopify, WordPress, Wix)…" className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
             </div>
-            <button type="submit" className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary-dark px-6 py-3.5 text-sm font-semibold text-primary-foreground hover:bg-primary transition-colors shadow-soft">
-              Send Enquiry <ArrowRight className="size-4" />
+            <button type="submit" disabled={formStatus === "sending"} className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary-dark px-6 py-3.5 text-sm font-semibold text-primary-foreground hover:bg-primary transition-colors shadow-soft disabled:opacity-70">
+              {formStatus === "sending" ? (<><Loader2 className="size-4 animate-spin" /> Sending…</>) :
+               formStatus === "sent" ? (<><Check className="size-4" /> Message sent!</>) :
+               (<>{t.send} <ArrowRight className="size-4" /></>)}
             </button>
+            {formStatus === "sent" && (
+              <p className="text-center text-xs text-primary font-medium">Thanks! Your message was delivered to {EMAIL}. I'll reply within 1 hour.</p>
+            )}
+            {formStatus === "error" && (
+              <p className="text-center text-xs text-destructive">Couldn't send — please use WhatsApp or email me directly at {EMAIL}.</p>
+            )}
             <p className="text-center text-xs text-muted-foreground">
               Or reach me directly on <a href={WHATSAPP} className="text-primary font-semibold hover:underline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
             </p>
@@ -438,6 +465,20 @@ function Index() {
          className="fixed bottom-5 right-5 z-40 grid size-14 place-items-center rounded-full bg-[#25D366] text-white shadow-soft hover:scale-105 transition-transform">
         <MessageCircle className="size-6" />
       </a>
+
+      {/* Scroll up/down controls */}
+      <div className="fixed bottom-5 left-5 z-40 flex flex-col gap-2">
+        {showScroll && (
+          <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Scroll to top"
+            className="grid size-11 place-items-center rounded-full bg-primary text-primary-foreground shadow-soft hover:bg-primary-dark transition-colors fade-up">
+            <ArrowUp className="size-5" />
+          </button>
+        )}
+        <button onClick={() => window.scrollBy({ top: window.innerHeight * 0.9, behavior: "smooth" })} aria-label="Scroll down"
+          className="grid size-11 place-items-center rounded-full border border-border bg-card text-foreground shadow-soft hover:border-primary hover:text-primary transition-colors">
+          <ArrowDown className="size-5" />
+        </button>
+      </div>
     </div>
   );
 }
@@ -476,6 +517,26 @@ function Field({ label, name, type = "text", placeholder, required }: {
         required={required}
         className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
       />
+    </div>
+  );
+}
+
+function LangSelect({ value, onChange }: { value: Lang; onChange: (l: Lang) => void }) {
+  const current = LANGS.find(l => l.code === value) ?? LANGS[0];
+  return (
+    <div className="relative">
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value as Lang)}
+        aria-label="Select language"
+        className="appearance-none cursor-pointer rounded-full border border-border bg-card pl-3 pr-7 py-1.5 text-xs font-semibold text-foreground hover:border-primary focus:border-primary focus:outline-none transition-colors"
+      >
+        {LANGS.map(l => (
+          <option key={l.code} value={l.code}>{l.flag} {l.label}</option>
+        ))}
+      </select>
+      <ChevronDown className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
+      <span className="sr-only">Current: {current.label}</span>
     </div>
   );
 }
