@@ -76,18 +76,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "AJ Tech Solutions — Shopify Verified Partner. Store setup, theme customization, app integration, SEO, CRO, and growth. Average response time: 1 hour." },
       { name: "author", content: "AJ Tech Solutions" },
       { property: "og:title", content: "AJ Tech Solutions — Shopify Verified Partner" },
-      { property: "og:description", content: "Let's scale up your business together. Shopify, Wix and WordPress expert. Hire AJ today." },
+      { property: "og:description", content: "AJ Tech Solutions — Shopify Verified Partner. Store setup, theme customization, app integration, SEO, CRO, and growth. Average response time: 1 hour." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "AJ Tech Solutions — Shopify Verified Partner" },
+      { name: "twitter:description", content: "AJ Tech Solutions — Shopify Verified Partner. Store setup, theme customization, app integration, SEO, CRO, and growth. Average response time: 1 hour." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/MhDKsORauHQhEHbbJxrsDzqY1X13/social-images/social-1779502396762-MY_LOGO_(9).webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/MhDKsORauHQhEHbbJxrsDzqY1X13/social-images/social-1779502396762-MY_LOGO_(9).webp" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", type: "image/jpeg", href: "/favicon.jpg" },
-      { rel: "apple-touch-icon", href: "/favicon.jpg" },
       {
         rel: "preconnect",
         href: "https://fonts.googleapis.com",
