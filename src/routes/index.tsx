@@ -1,17 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Menu, X, Star, BadgeCheck, Clock, MapPin, Languages, ShoppingBag,
   Palette, Plug, Search, TrendingUp, Megaphone, ArrowRight, Mail,
-  Instagram, MessageCircle, ExternalLink, Globe,
+  Instagram, MessageCircle, ExternalLink, Globe, ChevronDown, Sun, Moon, ArrowUp, ArrowDown, Check, Loader2,
 } from "lucide-react";
-import profileImg from "@/assets/profile.jpg";
+import profileImg from "@/assets/profile-aj.jpeg";
 import p1 from "@/assets/project-1.jpg";
 import p2 from "@/assets/project-2.jpg";
 import p3 from "@/assets/project-3.jpg";
 import p4 from "@/assets/project-4.jpg";
 import p5 from "@/assets/project-5.jpg";
 import p6 from "@/assets/project-6.jpg";
+import r1 from "@/assets/review-1.jpg";
+import r2 from "@/assets/review-2.jpg";
+import r3 from "@/assets/review-3.jpg";
+import r4 from "@/assets/review-4.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -41,10 +45,10 @@ const projects = [
 ];
 
 const testimonials = [
-  { name: "Sarah M.", role: "Founder, Luxe Fashion House", quote: "AJ rebuilt our entire store in two weeks. Sales nearly tripled. He's the most reliable developer I've worked with." },
-  { name: "David K.", role: "CEO, Premiut Electronics", quote: "Pixel-perfect, fast and obsessed with conversion. Communication was 10/10 — answered within minutes every time." },
-  { name: "Amélie R.", role: "Co-founder, Sereniskin", quote: "He understood our brand instantly. The new Shopify build looks like a luxury site and converts like one." },
-  { name: "Tomiwa A.", role: "Owner, Ergasy Organics", quote: "Worth every dollar. Our store is faster, ranks better and looks beautiful on mobile. Highly recommended." },
+  { name: "Sarah M.", role: "Founder, Luxe Fashion House", img: r1, quote: "AJ rebuilt our entire store in two weeks. Sales nearly tripled. He's the most reliable developer I've worked with." },
+  { name: "David K.", role: "CEO, Premiut Electronics", img: r2, quote: "Pixel-perfect, fast and obsessed with conversion. Communication was 10/10 — answered within minutes every time." },
+  { name: "Amélie R.", role: "Co-founder, Sereniskin", img: r3, quote: "He understood our brand instantly. The new Shopify build looks like a luxury site and converts like one." },
+  { name: "Tomiwa A.", role: "Owner, Ergasy Organics", img: r4, quote: "Worth every dollar. Our store is faster, ranks better and looks beautiful on mobile. Highly recommended." },
 ];
 
 const locations = ["Nigeria", "USA", "UK", "France", "Canada", "Australia", "Dubai", "Egypt"];
@@ -56,6 +60,27 @@ const navLinks = [
   { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
+
+const LANGS = [
+  { code: "en", label: "English", flag: "🇬🇧" },
+  { code: "fr", label: "Français", flag: "🇫🇷" },
+  { code: "es", label: "Español", flag: "🇪🇸" },
+  { code: "nl", label: "Nederlands", flag: "🇳🇱" },
+  { code: "el", label: "Ελληνικά", flag: "🇬🇷" },
+  { code: "tr", label: "Türkçe", flag: "🇹🇷" },
+  { code: "it", label: "Italiano", flag: "🇮🇹" },
+];
+
+type Lang = typeof LANGS[number]["code"];
+const T: Record<Lang, { hire: string; tagline: string; enquiry: string; send: string; fiverr: string }> = {
+  en: { hire: "Hire Me", tagline: "Let's scale up your business together. AJ is ready to support you and make your ideas become impact.", enquiry: "Send a project enquiry", send: "Send Enquiry", fiverr: "View Fiverr Profile" },
+  fr: { hire: "Engagez-moi", tagline: "Faisons grandir votre entreprise ensemble. AJ est prêt à transformer vos idées en impact réel.", enquiry: "Envoyer une demande de projet", send: "Envoyer", fiverr: "Voir mon profil Fiverr" },
+  es: { hire: "Contrátame", tagline: "Escalemos tu negocio juntos. AJ está listo para convertir tus ideas en impacto real.", enquiry: "Enviar una consulta de proyecto", send: "Enviar consulta", fiverr: "Ver perfil de Fiverr" },
+  nl: { hire: "Huur Mij In", tagline: "Laten we samen je bedrijf laten groeien. AJ helpt jouw ideeën impact maken.", enquiry: "Projectaanvraag versturen", send: "Versturen", fiverr: "Bekijk Fiverr-profiel" },
+  el: { hire: "Προσλάβετέ με", tagline: "Ας αναπτύξουμε μαζί την επιχείρησή σας. Ο AJ είναι έτοιμος να μετατρέψει τις ιδέες σας σε αποτέλεσμα.", enquiry: "Στείλτε αίτημα έργου", send: "Αποστολή", fiverr: "Προφίλ Fiverr" },
+  tr: { hire: "Beni İşe Al", tagline: "İşinizi birlikte büyütelim. AJ, fikirlerinizi etkiye dönüştürmeye hazır.", enquiry: "Proje talebi gönder", send: "Gönder", fiverr: "Fiverr Profilini Gör" },
+  it: { hire: "Assumimi", tagline: "Facciamo crescere il tuo business insieme. AJ è pronto a trasformare le tue idee in impatto.", enquiry: "Invia una richiesta di progetto", send: "Invia richiesta", fiverr: "Vedi profilo Fiverr" },
+};
 
 function Stars({ count = 5 }: { count?: number }) {
   return (
@@ -78,6 +103,28 @@ function PlatformBadge({ name, color }: { name: string; color: string }) {
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [lang, setLang] = useState<Lang>("en");
+  const [showScroll, setShowScroll] = useState(false);
+  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const t = T[lang];
+
+  useEffect(() => {
+    const saved = (localStorage.getItem("theme") as "light" | "dark") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    setTheme(saved);
+    const savedLang = (localStorage.getItem("lang") as Lang) || "en";
+    if (LANGS.some(l => l.code === savedLang)) setLang(savedLang);
+  }, []);
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+  useEffect(() => { localStorage.setItem("lang", lang); }, [lang]);
+  useEffect(() => {
+    const onScroll = () => setShowScroll(window.scrollY > 300);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -93,12 +140,18 @@ function Index() {
               <a key={l.href} href={l.href} className="hover:text-primary transition-colors">{l.label}</a>
             ))}
           </nav>
-          <a href="#contact" className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary-dark transition-colors">
-            Hire Me <ArrowRight className="size-4" />
-          </a>
-          <button onClick={() => setMenuOpen(v => !v)} className="md:hidden grid size-10 place-items-center rounded-lg border border-border" aria-label="Menu">
-            {menuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
+          <div className="flex items-center gap-2">
+            <LangSelect value={lang} onChange={setLang} />
+            <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="grid size-9 place-items-center rounded-full border border-border hover:border-primary hover:text-primary transition-colors" aria-label="Toggle theme">
+              {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
+            </button>
+            <a href="#contact" className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary-dark transition-colors">
+              {t.hire} <ArrowRight className="size-4" />
+            </a>
+            <button onClick={() => setMenuOpen(v => !v)} className="md:hidden grid size-10 place-items-center rounded-lg border border-border" aria-label="Menu">
+              {menuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          </div>
         </div>
         {menuOpen && (
           <div className="md:hidden border-t border-border bg-background fade-up">
@@ -107,7 +160,7 @@ function Index() {
                 <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)} className="py-2.5 text-sm font-medium text-foreground border-b border-border/60 last:border-0">{l.label}</a>
               ))}
               <a href="#contact" onClick={() => setMenuOpen(false)} className="mt-3 inline-flex items-center justify-center gap-1.5 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground">
-                Hire Me <ArrowRight className="size-4" />
+                {t.hire} <ArrowRight className="size-4" />
               </a>
             </div>
           </div>
@@ -153,7 +206,7 @@ function Index() {
           </div>
 
           <p className="mt-6 text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
-            <span className="text-foreground font-medium">"Let's scale up your business together.</span> AJ is ready to support you and make your ideas become impact."
+            <span className="text-foreground font-medium">"{t.tagline}"</span>
           </p>
 
           {/* Locations & languages */}
@@ -176,12 +229,18 @@ function Index() {
 
           <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
             <a href="#contact" className="inline-flex items-center justify-center gap-2 rounded-full bg-primary-dark px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-soft hover:bg-primary transition-colors">
-              Hire Me <ArrowRight className="size-4" />
+              {t.hire} <ArrowRight className="size-4" />
             </a>
             <a href={FIVERR} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-white px-6 py-3.5 text-sm font-semibold text-foreground hover:border-primary hover:text-primary transition-colors">
-              View Fiverr Profile <ExternalLink className="size-4" />
+              {t.fiverr} <ExternalLink className="size-4" />
             </a>
           </div>
+
+          {/* Swipe-up / scroll-down hint */}
+          <a href="#services" aria-label="Scroll to services" className="mt-10 inline-flex flex-col items-center gap-1 text-xs font-medium text-muted-foreground hover:text-primary transition-colors">
+            <span>Swipe up to explore</span>
+            <ChevronDown className="size-5 bounce-down text-primary" />
+          </a>
         </div>
       </section>
 
@@ -238,9 +297,7 @@ function Index() {
                 "{t.quote}"
               </blockquote>
               <figcaption className="mt-5 flex items-center gap-3 border-t border-border pt-4">
-                <div className="grid size-10 place-items-center rounded-full bg-accent text-primary-dark font-bold">
-                  {t.name.charAt(0)}
-                </div>
+                  <img src={t.img} alt={t.name} loading="lazy" width={80} height={80} className="size-10 rounded-full object-cover ring-2 ring-accent" />
                 <div>
                   <div className="text-sm font-semibold">{t.name}</div>
                   <div className="text-xs text-muted-foreground">{t.role}</div>
@@ -323,15 +380,34 @@ function Index() {
 
           {/* Form */}
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              const f = new FormData(e.currentTarget);
-              const body = `Hi AJ,%0A%0A${encodeURIComponent(String(f.get("message") ?? ""))}%0A%0A— ${encodeURIComponent(String(f.get("name") ?? ""))}`;
-              window.location.href = `mailto:${EMAIL}?subject=Project enquiry from ${encodeURIComponent(String(f.get("name") ?? ""))}&body=${body}`;
+              const form = e.currentTarget;
+              const data = new FormData(form);
+              setFormStatus("sending");
+              try {
+                const res = await fetch(`https://formsubmit.co/ajax/${EMAIL}`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json", Accept: "application/json" },
+                  body: JSON.stringify({
+                    name: data.get("name"),
+                    email: data.get("email"),
+                    budget: data.get("budget"),
+                    message: data.get("message"),
+                    _subject: `New project enquiry from ${data.get("name")}`,
+                    _template: "table",
+                  }),
+                });
+                if (!res.ok) throw new Error("Failed");
+                setFormStatus("sent");
+                form.reset();
+              } catch {
+                setFormStatus("error");
+              }
             }}
             className="lg:col-span-3 rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-4 shadow-soft"
           >
-            <h3 className="text-lg font-bold">Send a project enquiry</h3>
+            <h3 className="text-lg font-bold">{t.enquiry}</h3>
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Name" name="name" placeholder="Your full name" required />
               <Field label="Email" name="email" type="email" placeholder="you@company.com" required />
@@ -341,9 +417,17 @@ function Index() {
               <label className="text-xs font-semibold text-foreground/80">Tell me about your project</label>
               <textarea name="message" required rows={5} placeholder="Share your goals, timeline and platform (Shopify, WordPress, Wix)…" className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition" />
             </div>
-            <button type="submit" className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary-dark px-6 py-3.5 text-sm font-semibold text-primary-foreground hover:bg-primary transition-colors shadow-soft">
-              Send Enquiry <ArrowRight className="size-4" />
+            <button type="submit" disabled={formStatus === "sending"} className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary-dark px-6 py-3.5 text-sm font-semibold text-primary-foreground hover:bg-primary transition-colors shadow-soft disabled:opacity-70">
+              {formStatus === "sending" ? (<><Loader2 className="size-4 animate-spin" /> Sending…</>) :
+               formStatus === "sent" ? (<><Check className="size-4" /> Message sent!</>) :
+               (<>{t.send} <ArrowRight className="size-4" /></>)}
             </button>
+            {formStatus === "sent" && (
+              <p className="text-center text-xs text-primary font-medium">Thanks! Your message was delivered to {EMAIL}. I'll reply within 1 hour.</p>
+            )}
+            {formStatus === "error" && (
+              <p className="text-center text-xs text-destructive">Couldn't send — please use WhatsApp or email me directly at {EMAIL}.</p>
+            )}
             <p className="text-center text-xs text-muted-foreground">
               Or reach me directly on <a href={WHATSAPP} className="text-primary font-semibold hover:underline" target="_blank" rel="noopener noreferrer">WhatsApp</a>
             </p>
@@ -381,6 +465,20 @@ function Index() {
          className="fixed bottom-5 right-5 z-40 grid size-14 place-items-center rounded-full bg-[#25D366] text-white shadow-soft hover:scale-105 transition-transform">
         <MessageCircle className="size-6" />
       </a>
+
+      {/* Scroll up/down controls */}
+      <div className="fixed bottom-5 left-5 z-40 flex flex-col gap-2">
+        {showScroll && (
+          <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Scroll to top"
+            className="grid size-11 place-items-center rounded-full bg-primary text-primary-foreground shadow-soft hover:bg-primary-dark transition-colors fade-up">
+            <ArrowUp className="size-5" />
+          </button>
+        )}
+        <button onClick={() => window.scrollBy({ top: window.innerHeight * 0.9, behavior: "smooth" })} aria-label="Scroll down"
+          className="grid size-11 place-items-center rounded-full border border-border bg-card text-foreground shadow-soft hover:border-primary hover:text-primary transition-colors">
+          <ArrowDown className="size-5" />
+        </button>
+      </div>
     </div>
   );
 }
@@ -419,6 +517,26 @@ function Field({ label, name, type = "text", placeholder, required }: {
         required={required}
         className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
       />
+    </div>
+  );
+}
+
+function LangSelect({ value, onChange }: { value: Lang; onChange: (l: Lang) => void }) {
+  const current = LANGS.find(l => l.code === value) ?? LANGS[0];
+  return (
+    <div className="relative">
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value as Lang)}
+        aria-label="Select language"
+        className="appearance-none cursor-pointer rounded-full border border-border bg-card pl-3 pr-7 py-1.5 text-xs font-semibold text-foreground hover:border-primary focus:border-primary focus:outline-none transition-colors"
+      >
+        {LANGS.map(l => (
+          <option key={l.code} value={l.code}>{l.flag} {l.label}</option>
+        ))}
+      </select>
+      <ChevronDown className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
+      <span className="sr-only">Current: {current.label}</span>
     </div>
   );
 }
