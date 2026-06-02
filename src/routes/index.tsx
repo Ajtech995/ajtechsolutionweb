@@ -151,7 +151,7 @@ function Index() {
       <header className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5">
           <a href="#" className="flex items-center gap-2">
-            <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground font-bold">A</span>
+            <img src={ajLogo.url} alt="AJ Tech Solutions logo" className="size-9 rounded-lg object-contain bg-card border border-border p-0.5" />
             <span className="text-sm font-bold tracking-tight">AJ TECH SOLUTIONS</span>
           </a>
           <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-muted-foreground">
