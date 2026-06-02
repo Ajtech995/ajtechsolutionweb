@@ -545,3 +545,89 @@ function LangSelect({ value, onChange }: { value: Lang; onChange: (l: Lang) => v
     </div>
   );
 }
+
+function ReviewForm() {
+  const [rating, setRating] = useState(5);
+  const [hover, setHover] = useState(0);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  return (
+    <form
+      action={`https://formsubmit.co/${EMAIL}`}
+      method="POST"
+      encType="multipart/form-data"
+      onSubmit={() => setStatus("sending")}
+      className="mt-8 mx-auto max-w-2xl rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-4 shadow-soft"
+    >
+      <input type="hidden" name="_subject" value="New client review submission — pending approval" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value={typeof window !== "undefined" ? window.location.origin + "/?review=submitted#reviews" : "/"} />
+      <input type="hidden" name="rating" value={`${rating} / 5 stars`} />
+
+      <div>
+        <label className="text-xs font-semibold text-foreground/80">Your rating</label>
+        <div className="mt-2 flex items-center gap-1">
+          {[1, 2, 3, 4, 5].map(i => (
+            <button
+              key={i}
+              type="button"
+              onMouseEnter={() => setHover(i)}
+              onMouseLeave={() => setHover(0)}
+              onClick={() => setRating(i)}
+              aria-label={`${i} star${i > 1 ? "s" : ""}`}
+              className="p-1"
+            >
+              <Star
+                className={`size-7 transition-colors ${
+                  (hover || rating) >= i
+                    ? "fill-[color:var(--star)] text-[color:var(--star)]"
+                    : "text-muted-foreground"
+                }`}
+              />
+            </button>
+          ))}
+          <span className="ml-2 text-sm font-semibold text-foreground">{rating}/5</span>
+        </div>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Your name" name="name" placeholder="Jane Doe" required />
+        <Field label="Your website URL" name="website" type="url" placeholder="https://yourstore.com" required />
+      </div>
+
+      <div>
+        <label className="text-xs font-semibold text-foreground/80">Your feedback</label>
+        <textarea
+          name="feedback"
+          required
+          rows={5}
+          maxLength={1000}
+          placeholder="What was your experience working with AJ? Be specific about results."
+          className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+        />
+      </div>
+
+      <div>
+        <label className="text-xs font-semibold text-foreground/80">Screenshot of the work (optional)</label>
+        <input
+          type="file"
+          name="attachment"
+          accept="image/*"
+          className="mt-1.5 block w-full text-sm text-muted-foreground file:mr-3 file:rounded-full file:border-0 file:bg-accent file:px-4 file:py-2 file:text-xs file:font-semibold file:text-primary-dark hover:file:bg-primary hover:file:text-primary-foreground transition"
+        />
+      </div>
+
+      <button
+        type="submit"
+        disabled={status === "sending"}
+        className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary-dark px-6 py-3.5 text-sm font-semibold text-primary-foreground hover:bg-primary transition-colors shadow-soft disabled:opacity-70"
+      >
+        {status === "sending" ? (<><Loader2 className="size-4 animate-spin" /> Submitting…</>) : (<>Submit review <ArrowRight className="size-4" /></>)}
+      </button>
+      <p className="text-center text-xs text-muted-foreground">
+        Reviews are emailed to {EMAIL} for approval before being published.
+      </p>
+    </form>
+  );
+}
