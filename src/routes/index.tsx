@@ -306,6 +306,11 @@ function Index() {
             </figure>
           ))}
         </div>
+
+        <div className="mt-14">
+          <SectionHeading eyebrow="Leave a Review" title="Worked with me? Share your experience" subtitle="Your review is sent to me for approval, then published here." />
+          <ReviewForm />
+        </div>
       </section>
 
       {/* About */}
