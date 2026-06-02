@@ -231,7 +231,7 @@ function Index() {
             <a href="#contact" className="inline-flex items-center justify-center gap-2 rounded-full bg-primary-dark px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-soft hover:bg-primary transition-colors">
               {t.hire} <ArrowRight className="size-4" />
             </a>
-            <a href={FIVERR} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-white px-6 py-3.5 text-sm font-semibold text-foreground hover:border-primary hover:text-primary transition-colors">
+            <a href={FIVERR} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-6 py-3.5 text-sm font-semibold text-card-foreground hover:border-primary hover:text-primary transition-colors">
               {t.fiverr} <ExternalLink className="size-4" />
             </a>
           </div>
