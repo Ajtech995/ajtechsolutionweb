@@ -276,8 +276,8 @@ function Index() {
                   <div className="mt-4 flex items-center gap-2 rounded-lg bg-accent/60 px-3 py-2 text-xs font-semibold text-primary-dark">
                     <TrendingUp className="size-4" /> {p.result}
                   </div>
-                  <a href="#" onClick={(e) => e.preventDefault()} className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline">
-                    <Globe className="size-3.5" /> {p.url}
+                  <a href={p.url} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline">
+                    <Globe className="size-3.5" /> Visit live store
                   </a>
                 </div>
               </article>
