@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactElement } from "react";
 import {
   Menu, X, Star, BadgeCheck, Clock, MapPin, Languages, ShoppingBag,
   Palette, Plug, Search, TrendingUp, Megaphone, ArrowRight, Mail,
