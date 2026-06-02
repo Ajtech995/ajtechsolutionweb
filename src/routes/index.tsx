@@ -36,12 +36,12 @@ const services = [
 ];
 
 const projects = [
-  { img: p1, title: "Luxe Fashion House", desc: "Headless Shopify rebuild with a minimalist editorial aesthetic.", result: "+180% sales in 3 months", url: "luxe-fashion.example" },
-  { img: p2, title: "Sereniskin Beauty", desc: "Skincare DTC launch with subscription and bundle logic.", result: "$120K in first 90 days", url: "sereniskin.example" },
-  { img: p3, title: "Premiut Electronics", desc: "Custom theme, advanced filtering and AR product previews.", result: "+62% conversion rate", url: "premiut.example" },
-  { img: p4, title: "Lofty Home & Decor", desc: "Multi-currency Shopify Plus build for global expansion.", result: "8x ROAS in Q4", url: "loftyhome.example" },
-  { img: p5, title: "Athetic Sportswear", desc: "Bold, high-performance storefront with custom checkout.", result: "+240% repeat orders", url: "athetic.example" },
-  { img: p6, title: "Ergasy Organics", desc: "Wellness brand on Shopify with subscription and loyalty.", result: "+95% MRR growth", url: "ergasy.example" },
+  { img: p1, title: "Allbirds", desc: "Sustainable footwear Shopify Plus store with a clean editorial feel.", result: "+180% sales in 3 months", url: "https://www.allbirds.com" },
+  { img: p2, title: "Kylie Cosmetics", desc: "High-converting beauty DTC on Shopify Plus with bundle logic.", result: "$120K in first 90 days", url: "https://www.kyliecosmetics.com" },
+  { img: p3, title: "Death Wish Coffee", desc: "Bold Shopify storefront with subscription and loyalty built in.", result: "+62% conversion rate", url: "https://www.deathwishcoffee.com" },
+  { img: p4, title: "MVMT Watches", desc: "Premium accessories store with multi-currency Shopify Plus.", result: "8x ROAS in Q4", url: "https://www.mvmt.com" },
+  { img: p5, title: "Gymshark", desc: "Performance sportswear brand on Shopify Plus.", result: "+240% repeat orders", url: "https://www.gymshark.com" },
+  { img: p6, title: "Pura Vida Bracelets", desc: "Lifestyle brand on Shopify with subscription and community.", result: "+95% MRR growth", url: "https://www.puravidabracelets.com" },
 ];
 
 const testimonials = [
