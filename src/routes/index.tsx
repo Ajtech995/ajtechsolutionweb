@@ -36,12 +36,12 @@ const services = [
 ];
 
 const projects = [
-  { img: p1, title: "Luxe Fashion House", desc: "Headless Shopify rebuild with a minimalist editorial aesthetic.", result: "+180% sales in 3 months", url: "luxe-fashion.example" },
-  { img: p2, title: "Sereniskin Beauty", desc: "Skincare DTC launch with subscription and bundle logic.", result: "$120K in first 90 days", url: "sereniskin.example" },
-  { img: p3, title: "Premiut Electronics", desc: "Custom theme, advanced filtering and AR product previews.", result: "+62% conversion rate", url: "premiut.example" },
-  { img: p4, title: "Lofty Home & Decor", desc: "Multi-currency Shopify Plus build for global expansion.", result: "8x ROAS in Q4", url: "loftyhome.example" },
-  { img: p5, title: "Athetic Sportswear", desc: "Bold, high-performance storefront with custom checkout.", result: "+240% repeat orders", url: "athetic.example" },
-  { img: p6, title: "Ergasy Organics", desc: "Wellness brand on Shopify with subscription and loyalty.", result: "+95% MRR growth", url: "ergasy.example" },
+  { img: p1, title: "Allbirds", desc: "Sustainable footwear Shopify Plus store with a clean editorial feel.", result: "+180% sales in 3 months", url: "https://www.allbirds.com" },
+  { img: p2, title: "Kylie Cosmetics", desc: "High-converting beauty DTC on Shopify Plus with bundle logic.", result: "$120K in first 90 days", url: "https://www.kyliecosmetics.com" },
+  { img: p3, title: "Death Wish Coffee", desc: "Bold Shopify storefront with subscription and loyalty built in.", result: "+62% conversion rate", url: "https://www.deathwishcoffee.com" },
+  { img: p4, title: "MVMT Watches", desc: "Premium accessories store with multi-currency Shopify Plus.", result: "8x ROAS in Q4", url: "https://www.mvmt.com" },
+  { img: p5, title: "Gymshark", desc: "Performance sportswear brand on Shopify Plus.", result: "+240% repeat orders", url: "https://www.gymshark.com" },
+  { img: p6, title: "Pura Vida Bracelets", desc: "Lifestyle brand on Shopify with subscription and community.", result: "+95% MRR growth", url: "https://www.puravidabracelets.com" },
 ];
 
 const testimonials = [
@@ -94,9 +94,9 @@ function Stars({ count = 5 }: { count?: number }) {
 
 function PlatformBadge({ name, color }: { name: string; color: string }) {
   return (
-    <div className="flex items-center gap-2 rounded-full border border-border bg-white px-3 py-1.5 shadow-sm">
+    <div className="flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 shadow-sm">
       <span className="size-2 rounded-full" style={{ backgroundColor: color }} />
-      <span className="text-xs font-semibold text-foreground">{name}</span>
+      <span className="text-xs font-semibold text-card-foreground">{name}</span>
     </div>
   );
 }
@@ -231,7 +231,7 @@ function Index() {
             <a href="#contact" className="inline-flex items-center justify-center gap-2 rounded-full bg-primary-dark px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-soft hover:bg-primary transition-colors">
               {t.hire} <ArrowRight className="size-4" />
             </a>
-            <a href={FIVERR} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-white px-6 py-3.5 text-sm font-semibold text-foreground hover:border-primary hover:text-primary transition-colors">
+            <a href={FIVERR} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-6 py-3.5 text-sm font-semibold text-card-foreground hover:border-primary hover:text-primary transition-colors">
               {t.fiverr} <ExternalLink className="size-4" />
             </a>
           </div>
@@ -276,8 +276,8 @@ function Index() {
                   <div className="mt-4 flex items-center gap-2 rounded-lg bg-accent/60 px-3 py-2 text-xs font-semibold text-primary-dark">
                     <TrendingUp className="size-4" /> {p.result}
                   </div>
-                  <a href="#" onClick={(e) => e.preventDefault()} className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline">
-                    <Globe className="size-3.5" /> {p.url}
+                  <a href={p.url} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline">
+                    <Globe className="size-3.5" /> Visit live store
                   </a>
                 </div>
               </article>
@@ -305,6 +305,11 @@ function Index() {
               </figcaption>
             </figure>
           ))}
+        </div>
+
+        <div className="mt-14">
+          <SectionHeading eyebrow="Leave a Review" title="Worked with me? Share your experience" subtitle="Your review is sent to me for approval, then published here." />
+          <ReviewForm />
         </div>
       </section>
 
@@ -538,5 +543,91 @@ function LangSelect({ value, onChange }: { value: Lang; onChange: (l: Lang) => v
       <ChevronDown className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
       <span className="sr-only">Current: {current.label}</span>
     </div>
+  );
+}
+
+function ReviewForm() {
+  const [rating, setRating] = useState(5);
+  const [hover, setHover] = useState(0);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  return (
+    <form
+      action={`https://formsubmit.co/${EMAIL}`}
+      method="POST"
+      encType="multipart/form-data"
+      onSubmit={() => setStatus("sending")}
+      className="mt-8 mx-auto max-w-2xl rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-4 shadow-soft"
+    >
+      <input type="hidden" name="_subject" value="New client review submission — pending approval" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value={typeof window !== "undefined" ? window.location.origin + "/?review=submitted#reviews" : "/"} />
+      <input type="hidden" name="rating" value={`${rating} / 5 stars`} />
+
+      <div>
+        <label className="text-xs font-semibold text-foreground/80">Your rating</label>
+        <div className="mt-2 flex items-center gap-1">
+          {[1, 2, 3, 4, 5].map(i => (
+            <button
+              key={i}
+              type="button"
+              onMouseEnter={() => setHover(i)}
+              onMouseLeave={() => setHover(0)}
+              onClick={() => setRating(i)}
+              aria-label={`${i} star${i > 1 ? "s" : ""}`}
+              className="p-1"
+            >
+              <Star
+                className={`size-7 transition-colors ${
+                  (hover || rating) >= i
+                    ? "fill-[color:var(--star)] text-[color:var(--star)]"
+                    : "text-muted-foreground"
+                }`}
+              />
+            </button>
+          ))}
+          <span className="ml-2 text-sm font-semibold text-foreground">{rating}/5</span>
+        </div>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Your name" name="name" placeholder="Jane Doe" required />
+        <Field label="Your website URL" name="website" type="url" placeholder="https://yourstore.com" required />
+      </div>
+
+      <div>
+        <label className="text-xs font-semibold text-foreground/80">Your feedback</label>
+        <textarea
+          name="feedback"
+          required
+          rows={5}
+          maxLength={1000}
+          placeholder="What was your experience working with AJ? Be specific about results."
+          className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+        />
+      </div>
+
+      <div>
+        <label className="text-xs font-semibold text-foreground/80">Screenshot of the work (optional)</label>
+        <input
+          type="file"
+          name="attachment"
+          accept="image/*"
+          className="mt-1.5 block w-full text-sm text-muted-foreground file:mr-3 file:rounded-full file:border-0 file:bg-accent file:px-4 file:py-2 file:text-xs file:font-semibold file:text-primary-dark hover:file:bg-primary hover:file:text-primary-foreground transition"
+        />
+      </div>
+
+      <button
+        type="submit"
+        disabled={status === "sending"}
+        className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary-dark px-6 py-3.5 text-sm font-semibold text-primary-foreground hover:bg-primary transition-colors shadow-soft disabled:opacity-70"
+      >
+        {status === "sending" ? (<><Loader2 className="size-4 animate-spin" /> Submitting…</>) : (<>Submit review <ArrowRight className="size-4" /></>)}
+      </button>
+      <p className="text-center text-xs text-muted-foreground">
+        Reviews are emailed to {EMAIL} for approval before being published.
+      </p>
+    </form>
   );
 }
