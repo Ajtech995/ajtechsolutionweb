@@ -16,6 +16,9 @@ import r1 from "@/assets/review-1.jpg";
 import r2 from "@/assets/review-2.jpg";
 import r3 from "@/assets/review-3.jpg";
 import r4 from "@/assets/review-4.jpg";
+import ajLogo from "@/assets/aj-logo.png.asset.json";
+import wpLogo from "@/assets/wordpress.png.asset.json";
+import wixLogo from "@/assets/wix.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -101,16 +104,10 @@ const PLATFORM_LOGOS: Record<string, ReactElement> = {
     </svg>
   ),
   wordpress: (
-    <svg viewBox="0 0 122.52 122.523" className="size-4" aria-hidden="true">
-      <path fill="#21759B" d="M8.708 61.26c0 20.802 12.089 38.779 29.619 47.298L13.258 39.872a52.354 52.354 0 0 0-4.55 21.388zm87.92-2.65c0-6.495-2.333-10.993-4.334-14.494-2.664-4.329-5.161-7.995-5.161-12.324 0-4.831 3.664-9.328 8.825-9.328.233 0 .454.029.681.042-9.35-8.566-21.807-13.796-35.486-13.796-18.36 0-34.513 9.42-43.91 23.688 1.233.037 2.395.063 3.382.063 5.497 0 14.006-.667 14.006-.667 2.833-.167 3.167 3.994.337 4.329 0 0-2.847.335-6.015.501l19.138 56.925L99.6 64.96c1.149-3.328 1.337-5.83 1.337-7.913 0-2.92-1.057-4.962-1.95-6.557-.668-1.323-1.357-2.717-1.357-3.88z"/>
-      <path fill="#21759B" d="M63.16 67.418l-15.91 46.234a53.115 53.115 0 0 0 14.952 2.155c5.749 0 11.265-.99 16.404-2.796a4.792 4.792 0 0 1-.376-.733L63.16 67.418zm44.13-29.118c.226 1.674.352 3.471.352 5.404 0 5.333-.998 11.328-3.996 18.824l-16.053 46.413c15.624-9.111 26.133-26.038 26.133-45.426.001-9.137-2.333-17.729-6.436-25.215z"/>
-      <path fill="#21759B" d="M61.262 0C27.483 0 0 27.481 0 61.26c0 33.783 27.483 61.263 61.262 61.263 33.778 0 61.265-27.48 61.265-61.263C122.526 27.481 95.039 0 61.262 0zm0 119.715c-32.23 0-58.453-26.223-58.453-58.455 0-32.23 26.222-58.451 58.453-58.451 32.229 0 58.45 26.221 58.45 58.451 0 32.232-26.221 58.455-58.45 58.455z"/>
-    </svg>
+    <img src={wpLogo.url} alt="WordPress" className="size-4 object-contain" />
   ),
   wix: (
-    <svg viewBox="0 0 24 24" className="size-4" aria-hidden="true">
-      <path fill="#FBBD05" d="M5.062 5.61L3.39 11.853 1.788 5.61H0l2.46 8.78h1.86l1.672-6.105 1.673 6.105h1.86l2.46-8.78H10.2L8.598 11.853 6.926 5.61H5.062zm12.39 0l-2.118 3.123L13.193 5.61h-2.13l3.16 4.39-3.16 4.39h2.13l2.141-3.123 2.118 3.123h2.13l-3.16-4.39 3.16-4.39h-2.13zm4.05 0v8.78H24V5.61h-2.498z"/>
-    </svg>
+    <img src={wixLogo.url} alt="Wix" className="size-4 object-contain" />
   ),
 };
 
@@ -154,7 +151,7 @@ function Index() {
       <header className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5">
           <a href="#" className="flex items-center gap-2">
-            <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground font-bold">A</span>
+            <img src={ajLogo.url} alt="AJ Tech Solutions logo" className="size-9 rounded-lg object-contain bg-card border border-border p-0.5" />
             <span className="text-sm font-bold tracking-tight">AJ TECH SOLUTIONS</span>
           </a>
           <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-muted-foreground">
