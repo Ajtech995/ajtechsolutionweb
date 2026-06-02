@@ -16,6 +16,9 @@ import r1 from "@/assets/review-1.jpg";
 import r2 from "@/assets/review-2.jpg";
 import r3 from "@/assets/review-3.jpg";
 import r4 from "@/assets/review-4.jpg";
+import ajLogo from "@/assets/aj-logo.png.asset.json";
+import wpLogo from "@/assets/wordpress.png.asset.json";
+import wixLogo from "@/assets/wix.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
