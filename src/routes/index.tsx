@@ -94,9 +94,9 @@ function Stars({ count = 5 }: { count?: number }) {
 
 function PlatformBadge({ name, color }: { name: string; color: string }) {
   return (
-    <div className="flex items-center gap-2 rounded-full border border-border bg-white px-3 py-1.5 shadow-sm">
+    <div className="flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 shadow-sm">
       <span className="size-2 rounded-full" style={{ backgroundColor: color }} />
-      <span className="text-xs font-semibold text-foreground">{name}</span>
+      <span className="text-xs font-semibold text-card-foreground">{name}</span>
     </div>
   );
 }
