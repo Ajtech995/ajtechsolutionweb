@@ -331,10 +331,10 @@ function Index() {
         <div className="mx-auto max-w-3xl px-5 text-center">
           <SectionHeading eyebrow="About Me" title="A passionate ecommerce builder" />
           <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-            I'm Abdulbasit — founder of AJ Tech Solutions. For over 6 years I've helped 650+ founders launch, redesign and scale stores on Shopify, WordPress and Wix. My focus is simple: build beautiful, fast, conversion-focused websites that turn visitors into loyal customers. From solo founders to Shopify Plus brands, I treat every project like it's my own business.
+            I'm Abdulbasit — founder of AJ Tech Solutions. For over 6 years I've helped 289+ founders launch, redesign and scale stores on Shopify, WordPress and Wix. My focus is simple: build beautiful, fast, conversion-focused websites that turn visitors into loyal customers. From solo founders to Shopify Plus brands, I treat every project like it's my own business.
           </p>
           <div className="mt-8 grid grid-cols-3 gap-4 text-center">
-            <Stat n="650+" label="Happy clients" />
+            <Stat n="289+" label="Happy clients" />
             <Stat n="6+ yrs" label="Experience" />
             <Stat n="8" label="Countries served" />
           </div>
