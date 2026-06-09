@@ -6,12 +6,6 @@ import {
   Instagram, MessageCircle, ExternalLink, Globe, ChevronDown, Sun, Moon, ArrowUp, ArrowDown, Check, Loader2,
 } from "lucide-react";
 import profileImg from "@/assets/profile-aj.jpeg";
-import p1 from "@/assets/project-1.jpg";
-import p2 from "@/assets/project-2.jpg";
-import p3 from "@/assets/project-3.jpg";
-import p4 from "@/assets/project-4.jpg";
-import p5 from "@/assets/project-5.jpg";
-import p6 from "@/assets/project-6.jpg";
 import r1 from "@/assets/review-1.jpg";
 import r2 from "@/assets/review-2.jpg";
 import r3 from "@/assets/review-3.jpg";
@@ -38,14 +32,14 @@ const services = [
   { icon: Megaphone, title: "Sales Growth & Marketing", desc: "Email, ads and funnels that turn traffic into revenue." },
 ];
 
+const shot = (url: string) => `https://image.thum.io/get/width/1200/crop/900/noanimate/${url}`;
 const projects = [
-  { img: p1, title: "Allbirds", desc: "Sustainable footwear Shopify Plus store with a clean editorial feel.", result: "+180% sales in 3 months", url: "https://www.allbirds.com" },
-  { img: p2, title: "Kylie Cosmetics", desc: "High-converting beauty DTC on Shopify Plus with bundle logic.", result: "$120K in first 90 days", url: "https://www.kyliecosmetics.com" },
-  { img: p3, title: "Death Wish Coffee", desc: "Bold Shopify storefront with subscription and loyalty built in.", result: "+62% conversion rate", url: "https://www.deathwishcoffee.com" },
-  { img: p4, title: "MVMT Watches", desc: "Premium accessories store with multi-currency Shopify Plus.", result: "8x ROAS in Q4", url: "https://www.mvmt.com" },
-  { img: p5, title: "Gymshark", desc: "Performance sportswear brand on Shopify Plus.", result: "+240% repeat orders", url: "https://www.gymshark.com" },
-  { img: p6, title: "Pura Vida Bracelets", desc: "Lifestyle brand on Shopify with subscription and community.", result: "+95% MRR growth", url: "https://www.puravidabracelets.com" },
-];
+  { url: "https://www.calliope.style/", title: "Calliope", desc: "Italian contemporary fashion brand on Shopify with a refined editorial storefront.", result: "Premium fashion build" },
+  { url: "https://www.cultfurniture.com/", title: "Cult Furniture", desc: "UK design-led furniture retailer on Shopify with rich catalog and filtering.", result: "High-AOV catalog store" },
+  { url: "https://www.baracuta.com/", title: "Baracuta", desc: "Iconic British heritage menswear brand running a polished Shopify storefront.", result: "Heritage DTC brand" },
+  { url: "https://www.kookai.eu/", title: "Kookaï", desc: "French womenswear label on Shopify with multi-region, multi-currency setup.", result: "EU multi-region store" },
+  { url: "https://yourstarter.ch/", title: "Your Starter", desc: "Swiss lifestyle Shopify store with clean conversion-focused product pages.", result: "Conversion-first build" },
+].map(p => ({ ...p, img: shot(p.url) }));
 
 const testimonials = [
   { name: "Sarah M.", role: "Founder, Luxe Fashion House", img: r1, quote: "AJ rebuilt our entire store in two weeks. Sales nearly tripled. He's the most reliable developer I've worked with." },
@@ -131,8 +125,30 @@ function Index() {
   useEffect(() => {
     const saved = (localStorage.getItem("theme") as "light" | "dark") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     setTheme(saved);
-    const savedLang = (localStorage.getItem("lang") as Lang) || "en";
-    if (LANGS.some(l => l.code === savedLang)) setLang(savedLang);
+    const savedLang = localStorage.getItem("lang") as Lang | null;
+    if (savedLang && LANGS.some(l => l.code === savedLang)) {
+      setLang(savedLang);
+      return;
+    }
+    // Auto-detect language from buyer's country (geo-IP)
+    const COUNTRY_TO_LANG: Record<string, Lang> = {
+      FR: "fr", BE: "fr", LU: "fr", MC: "fr", CI: "fr", SN: "fr", CM: "fr",
+      ES: "es", MX: "es", AR: "es", CO: "es", CL: "es", PE: "es", VE: "es",
+      NL: "nl", AW: "nl", SR: "nl",
+      GR: "el", CY: "el",
+      TR: "tr",
+      IT: "it", SM: "it", VA: "it",
+    };
+    fetch("https://ipapi.co/json/")
+      .then(r => r.ok ? r.json() : null)
+      .then((d: { country_code?: string; languages?: string } | null) => {
+        if (!d) return;
+        const byCountry = d.country_code ? COUNTRY_TO_LANG[d.country_code.toUpperCase()] : undefined;
+        const byLang = d.languages?.split(",")[0]?.slice(0, 2).toLowerCase() as Lang | undefined;
+        const detected = byCountry || (byLang && LANGS.some(l => l.code === byLang) ? byLang : undefined);
+        if (detected) setLang(detected);
+      })
+      .catch(() => {});
   }, []);
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -210,7 +226,7 @@ function Index() {
           <div className="mt-3 flex items-center justify-center gap-2 text-sm">
             <Stars />
             <span className="font-semibold text-foreground">4.8</span>
-            <span className="text-muted-foreground">(650 reviews)</span>
+            <span className="text-muted-foreground">(289 reviews)</span>
           </div>
 
           <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-3.5 py-1.5 text-xs font-semibold text-primary-foreground shadow-soft">
@@ -337,10 +353,10 @@ function Index() {
         <div className="mx-auto max-w-3xl px-5 text-center">
           <SectionHeading eyebrow="About Me" title="A passionate ecommerce builder" />
           <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-            I'm Abdulbasit — founder of AJ Tech Solutions. For over 6 years I've helped 650+ founders launch, redesign and scale stores on Shopify, WordPress and Wix. My focus is simple: build beautiful, fast, conversion-focused websites that turn visitors into loyal customers. From solo founders to Shopify Plus brands, I treat every project like it's my own business.
+            I'm Abdulbasit — founder of AJ Tech Solutions. For over 6 years I've helped 289+ founders launch, redesign and scale stores on Shopify, WordPress and Wix. My focus is simple: build beautiful, fast, conversion-focused websites that turn visitors into loyal customers. From solo founders to Shopify Plus brands, I treat every project like it's my own business.
           </p>
           <div className="mt-8 grid grid-cols-3 gap-4 text-center">
-            <Stat n="650+" label="Happy clients" />
+            <Stat n="289+" label="Happy clients" />
             <Stat n="6+ yrs" label="Experience" />
             <Stat n="8" label="Countries served" />
           </div>
