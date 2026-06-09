@@ -6,12 +6,6 @@ import {
   Instagram, MessageCircle, ExternalLink, Globe, ChevronDown, Sun, Moon, ArrowUp, ArrowDown, Check, Loader2,
 } from "lucide-react";
 import profileImg from "@/assets/profile-aj.jpeg";
-import p1 from "@/assets/project-1.jpg";
-import p2 from "@/assets/project-2.jpg";
-import p3 from "@/assets/project-3.jpg";
-import p4 from "@/assets/project-4.jpg";
-import p5 from "@/assets/project-5.jpg";
-import p6 from "@/assets/project-6.jpg";
 import r1 from "@/assets/review-1.jpg";
 import r2 from "@/assets/review-2.jpg";
 import r3 from "@/assets/review-3.jpg";
@@ -38,14 +32,14 @@ const services = [
   { icon: Megaphone, title: "Sales Growth & Marketing", desc: "Email, ads and funnels that turn traffic into revenue." },
 ];
 
+const shot = (url: string) => `https://image.thum.io/get/width/1200/crop/900/noanimate/${url}`;
 const projects = [
-  { img: p1, title: "Allbirds", desc: "Sustainable footwear Shopify Plus store with a clean editorial feel.", result: "+180% sales in 3 months", url: "https://www.allbirds.com" },
-  { img: p2, title: "Kylie Cosmetics", desc: "High-converting beauty DTC on Shopify Plus with bundle logic.", result: "$120K in first 90 days", url: "https://www.kyliecosmetics.com" },
-  { img: p3, title: "Death Wish Coffee", desc: "Bold Shopify storefront with subscription and loyalty built in.", result: "+62% conversion rate", url: "https://www.deathwishcoffee.com" },
-  { img: p4, title: "MVMT Watches", desc: "Premium accessories store with multi-currency Shopify Plus.", result: "8x ROAS in Q4", url: "https://www.mvmt.com" },
-  { img: p5, title: "Gymshark", desc: "Performance sportswear brand on Shopify Plus.", result: "+240% repeat orders", url: "https://www.gymshark.com" },
-  { img: p6, title: "Pura Vida Bracelets", desc: "Lifestyle brand on Shopify with subscription and community.", result: "+95% MRR growth", url: "https://www.puravidabracelets.com" },
-];
+  { url: "https://www.calliope.style/", title: "Calliope", desc: "Italian contemporary fashion brand on Shopify with a refined editorial storefront.", result: "Premium fashion build" },
+  { url: "https://www.cultfurniture.com/", title: "Cult Furniture", desc: "UK design-led furniture retailer on Shopify with rich catalog and filtering.", result: "High-AOV catalog store" },
+  { url: "https://www.baracuta.com/", title: "Baracuta", desc: "Iconic British heritage menswear brand running a polished Shopify storefront.", result: "Heritage DTC brand" },
+  { url: "https://www.kookai.eu/", title: "Kookaï", desc: "French womenswear label on Shopify with multi-region, multi-currency setup.", result: "EU multi-region store" },
+  { url: "https://yourstarter.ch/", title: "Your Starter", desc: "Swiss lifestyle Shopify store with clean conversion-focused product pages.", result: "Conversion-first build" },
+].map(p => ({ ...p, img: shot(p.url) }));
 
 const testimonials = [
   { name: "Sarah M.", role: "Founder, Luxe Fashion House", img: r1, quote: "AJ rebuilt our entire store in two weeks. Sales nearly tripled. He's the most reliable developer I've worked with." },
@@ -210,7 +204,7 @@ function Index() {
           <div className="mt-3 flex items-center justify-center gap-2 text-sm">
             <Stars />
             <span className="font-semibold text-foreground">4.8</span>
-            <span className="text-muted-foreground">(650 reviews)</span>
+            <span className="text-muted-foreground">(289 reviews)</span>
           </div>
 
           <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-3.5 py-1.5 text-xs font-semibold text-primary-foreground shadow-soft">
