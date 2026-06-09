@@ -125,8 +125,30 @@ function Index() {
   useEffect(() => {
     const saved = (localStorage.getItem("theme") as "light" | "dark") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     setTheme(saved);
-    const savedLang = (localStorage.getItem("lang") as Lang) || "en";
-    if (LANGS.some(l => l.code === savedLang)) setLang(savedLang);
+    const savedLang = localStorage.getItem("lang") as Lang | null;
+    if (savedLang && LANGS.some(l => l.code === savedLang)) {
+      setLang(savedLang);
+      return;
+    }
+    // Auto-detect language from buyer's country (geo-IP)
+    const COUNTRY_TO_LANG: Record<string, Lang> = {
+      FR: "fr", BE: "fr", LU: "fr", MC: "fr", CI: "fr", SN: "fr", CM: "fr",
+      ES: "es", MX: "es", AR: "es", CO: "es", CL: "es", PE: "es", VE: "es",
+      NL: "nl", AW: "nl", SR: "nl",
+      GR: "el", CY: "el",
+      TR: "tr",
+      IT: "it", SM: "it", VA: "it",
+    };
+    fetch("https://ipapi.co/json/")
+      .then(r => r.ok ? r.json() : null)
+      .then((d: { country_code?: string; languages?: string } | null) => {
+        if (!d) return;
+        const byCountry = d.country_code ? COUNTRY_TO_LANG[d.country_code.toUpperCase()] : undefined;
+        const byLang = d.languages?.split(",")[0]?.slice(0, 2).toLowerCase() as Lang | undefined;
+        const detected = byCountry || (byLang && LANGS.some(l => l.code === byLang) ? byLang : undefined);
+        if (detected) setLang(detected);
+      })
+      .catch(() => {});
   }, []);
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
