@@ -294,7 +294,7 @@ function Index() {
               {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
             </button>
             <a href="#contact" className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary-dark transition-colors">
-              {t.hire} <ArrowRight className="size-4" />
+              Hire Me <ArrowRight className="size-4" />
             </a>
             <button onClick={() => setMenuOpen(v => !v)} className="md:hidden grid size-10 place-items-center rounded-lg border border-border" aria-label="Menu">
               {menuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -308,7 +308,7 @@ function Index() {
                 <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)} className="py-2.5 text-sm font-medium text-foreground border-b border-border/60 last:border-0">{l.label}</a>
               ))}
               <a href="#contact" onClick={() => setMenuOpen(false)} className="mt-3 inline-flex items-center justify-center gap-1.5 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground">
-                {t.hire} <ArrowRight className="size-4" />
+                Hire Me <ArrowRight className="size-4" />
               </a>
             </div>
           </div>
@@ -354,7 +354,7 @@ function Index() {
           </div>
 
           <p className="mt-6 text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
-            <span className="text-foreground font-medium">"{t.tagline}"</span>
+            <span className="text-foreground font-medium">"Let's scale up your business together. AJ is ready to support you and make your ideas become impact."</span>
           </p>
 
           {/* Locations & languages */}
@@ -377,10 +377,10 @@ function Index() {
 
           <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
             <a href="#contact" className="inline-flex items-center justify-center gap-2 rounded-full bg-primary-dark px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-soft hover:bg-primary transition-colors">
-              {t.hire} <ArrowRight className="size-4" />
+              Hire Me <ArrowRight className="size-4" />
             </a>
             <a href={FIVERR} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-6 py-3.5 text-sm font-semibold text-card-foreground hover:border-primary hover:text-primary transition-colors">
-              {t.fiverr} <ExternalLink className="size-4" />
+              View Fiverr Profile <ExternalLink className="size-4" />
             </a>
           </div>
 
