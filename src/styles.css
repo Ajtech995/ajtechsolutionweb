@@ -175,3 +175,12 @@
     color: var(--color-foreground);
   }
 }
+
+/* Hide Google Translate top banner + tooltip; keep page shifted to top */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-gadget-icon,
+.goog-te-balloon-frame,
+#goog-gt-tt { display: none !important; }
+body { top: 0 !important; }
+.goog-tooltip, .goog-tooltip:hover { display: none !important; }
+.goog-text-highlight { background: transparent !important; box-shadow: none !important; }
