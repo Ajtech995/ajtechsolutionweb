@@ -474,11 +474,11 @@ function Index() {
         <div className="mx-auto max-w-3xl px-5 text-center">
           <SectionHeading eyebrow="About Me" title="A passionate ecommerce builder" />
           <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-            I'm Abdulbasit — founder of AJ Tech Solutions. For over 6 years I've helped 289+ founders launch, redesign and scale stores on Shopify, WordPress and Wix. My focus is simple: build beautiful, fast, conversion-focused websites that turn visitors into loyal customers. From solo founders to Shopify Plus brands, I treat every project like it's my own business.
+            I'm Abdulbasit — founder of AJ Tech Solutions. For over 4 years I've helped 289+ founders launch, redesign and scale stores on Shopify, WordPress and Wix. My focus is simple: build beautiful, fast, conversion-focused websites that turn visitors into loyal customers. From solo founders to Shopify Plus brands, I treat every project like it's my own business.
           </p>
           <div className="mt-8 grid grid-cols-3 gap-4 text-center">
             <Stat n="289+" label="Happy clients" />
-            <Stat n="6+ yrs" label="Experience" />
+            <Stat n="4+ yrs" label="Experience" />
             <Stat n="8" label="Countries served" />
           </div>
         </div>
@@ -622,6 +622,8 @@ function Index() {
       </footer>
 
       {/* Floating WhatsApp */}
+      {/* Google Translate mount (hidden — controlled via LangSelect) */}
+      <div id="google_translate_element" className="hidden" aria-hidden="true" />
       <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp"
          className="fixed bottom-5 right-5 z-40 grid size-14 place-items-center rounded-full bg-[#25D366] text-white shadow-soft hover:scale-105 transition-transform">
         <MessageCircle className="size-6" />
