@@ -33,13 +33,65 @@ const services = [
 ];
 
 const shot = (url: string) => `https://image.thum.io/get/width/1200/crop/900/noanimate/${url}`;
-const projects = [
-  { url: "https://www.calliope.style/", title: "Calliope", desc: "Italian contemporary fashion brand on Shopify with a refined editorial storefront.", result: "Premium fashion build" },
-  { url: "https://www.cultfurniture.com/", title: "Cult Furniture", desc: "UK design-led furniture retailer on Shopify with rich catalog and filtering.", result: "High-AOV catalog store" },
-  { url: "https://www.baracuta.com/", title: "Baracuta", desc: "Iconic British heritage menswear brand running a polished Shopify storefront.", result: "Heritage DTC brand" },
-  { url: "https://www.kookai.eu/", title: "Kookaï", desc: "French womenswear label on Shopify with multi-region, multi-currency setup.", result: "EU multi-region store" },
-  { url: "https://yourstarter.ch/", title: "Your Starter", desc: "Swiss lifestyle Shopify store with clean conversion-focused product pages.", result: "Conversion-first build" },
-].map(p => ({ ...p, img: shot(p.url) }));
+const PROJECT_URLS = [
+  "https://freckledpoppy.com/",
+  "https://yourstarter.ch/",
+  "https://www.kookai.eu/",
+  "https://www.baracuta.com/",
+  "https://www.cultfurniture.com/",
+  "https://www.calliope.style/",
+  "https://matcha-karu.com/",
+  "https://natetlab.com/",
+  "https://titan.fitness/",
+  "https://bearefoot.com/",
+  "https://southbeachofficial.com/",
+  "https://tuestecafe.mx/",
+  "https://eu.boden.com/",
+  "https://mariam-col.com/",
+  "https://cultstore.com/",
+  "https://helsam.dk/",
+  "https://evereve.com/",
+  "https://kijimaru.jp/",
+  "https://www.altomusic.com/",
+  "https://beachytones.com.au/",
+  "https://www.championstore.com/",
+  "https://roadtyping.de/",
+  "https://koigolfclub.com/",
+  "https://www.palestinianelegance.com/",
+  "https://www.zop.in/",
+  "https://vigneto.in/",
+  "https://watery.ie/",
+  "https://amalfa.in/",
+  "https://wickedcushions.com/",
+  "https://www.houseofsal.com/",
+  "https://goliate.com/",
+  "https://www.insteon.com/",
+  "https://www.culturekings.com.au/",
+  "https://ecommerce.datablitz.com.ph/",
+  "https://soho-scarves.com/",
+  "https://www.armedangels.com/",
+  "https://plaza.dk/",
+  "https://www.trueclassictees.com/",
+  "https://allmatters.com/",
+  "https://www.bike-mailorder.com/",
+  "https://sermilitar.store/",
+  "https://www.gearx.com/",
+  "https://kookai.ch/",
+  "https://itokri.com/",
+  "https://www.clubllondon.ae/",
+  "https://bprimal.com.au/",
+  "https://www.netlingeri.dk/",
+];
+function titleFromUrl(u: string) {
+  const host = new URL(u).hostname.replace(/^www\./, "").replace(/^(shop|store|checkout|ecommerce|eu|uk|us|ca|au|fr|de|nl|mx|br|es|ch)\./, "");
+  const base = host.split(".")[0];
+  return base.replace(/[-_]/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+}
+const projects = PROJECT_URLS.map(url => ({
+  url,
+  title: titleFromUrl(url),
+  img: shot(url),
+}));
 
 const testimonials = [
   { name: "Sarah M.", role: "Founder, Luxe Fashion House", img: r1, quote: "AJ rebuilt our entire store in two weeks. Sales nearly tripled. He's the most reliable developer I've worked with." },
@@ -49,7 +101,7 @@ const testimonials = [
 ];
 
 const locations = ["Nigeria", "USA", "UK", "France", "Canada", "Australia", "Dubai", "Egypt"];
-const langs = ["English", "French", "Spanish", "Dutch", "Greek", "Turkish", "Italian"];
+const langs = ["English", "Spanish", "French", "Arabic", "Chinese", "Hindi", "Portuguese", "German"];
 const navLinks = [
   { href: "#services", label: "Services" },
   { href: "#work", label: "Work" },
@@ -58,26 +110,40 @@ const navLinks = [
   { href: "#contact", label: "Contact" },
 ];
 
+// Top 30 world languages (English first). Translation handled by Google Translate.
 const LANGS = [
   { code: "en", label: "English", flag: "🇬🇧" },
-  { code: "fr", label: "Français", flag: "🇫🇷" },
+  { code: "zh-CN", label: "中文 (简体)", flag: "🇨🇳" },
+  { code: "hi", label: "हिन्दी", flag: "🇮🇳" },
   { code: "es", label: "Español", flag: "🇪🇸" },
-  { code: "nl", label: "Nederlands", flag: "🇳🇱" },
-  { code: "el", label: "Ελληνικά", flag: "🇬🇷" },
+  { code: "fr", label: "Français", flag: "🇫🇷" },
+  { code: "ar", label: "العربية", flag: "🇸🇦" },
+  { code: "bn", label: "বাংলা", flag: "🇧🇩" },
+  { code: "pt", label: "Português", flag: "🇵🇹" },
+  { code: "ru", label: "Русский", flag: "🇷🇺" },
+  { code: "ur", label: "اردو", flag: "🇵🇰" },
+  { code: "id", label: "Bahasa Indonesia", flag: "🇮🇩" },
+  { code: "de", label: "Deutsch", flag: "🇩🇪" },
+  { code: "ja", label: "日本語", flag: "🇯🇵" },
+  { code: "sw", label: "Kiswahili", flag: "🇰🇪" },
+  { code: "mr", label: "मराठी", flag: "🇮🇳" },
+  { code: "te", label: "తెలుగు", flag: "🇮🇳" },
   { code: "tr", label: "Türkçe", flag: "🇹🇷" },
+  { code: "ta", label: "தமிழ்", flag: "🇮🇳" },
+  { code: "vi", label: "Tiếng Việt", flag: "🇻🇳" },
+  { code: "ko", label: "한국어", flag: "🇰🇷" },
+  { code: "fa", label: "فارسی", flag: "🇮🇷" },
   { code: "it", label: "Italiano", flag: "🇮🇹" },
+  { code: "th", label: "ไทย", flag: "🇹🇭" },
+  { code: "pl", label: "Polski", flag: "🇵🇱" },
+  { code: "uk", label: "Українська", flag: "🇺🇦" },
+  { code: "nl", label: "Nederlands", flag: "🇳🇱" },
+  { code: "ro", label: "Română", flag: "🇷🇴" },
+  { code: "el", label: "Ελληνικά", flag: "🇬🇷" },
+  { code: "hu", label: "Magyar", flag: "🇭🇺" },
+  { code: "cs", label: "Čeština", flag: "🇨🇿" },
 ];
-
 type Lang = typeof LANGS[number]["code"];
-const T: Record<Lang, { hire: string; tagline: string; enquiry: string; send: string; fiverr: string }> = {
-  en: { hire: "Hire Me", tagline: "Let's scale up your business together. AJ is ready to support you and make your ideas become impact.", enquiry: "Send a project enquiry", send: "Send Enquiry", fiverr: "View Fiverr Profile" },
-  fr: { hire: "Engagez-moi", tagline: "Faisons grandir votre entreprise ensemble. AJ est prêt à transformer vos idées en impact réel.", enquiry: "Envoyer une demande de projet", send: "Envoyer", fiverr: "Voir mon profil Fiverr" },
-  es: { hire: "Contrátame", tagline: "Escalemos tu negocio juntos. AJ está listo para convertir tus ideas en impacto real.", enquiry: "Enviar una consulta de proyecto", send: "Enviar consulta", fiverr: "Ver perfil de Fiverr" },
-  nl: { hire: "Huur Mij In", tagline: "Laten we samen je bedrijf laten groeien. AJ helpt jouw ideeën impact maken.", enquiry: "Projectaanvraag versturen", send: "Versturen", fiverr: "Bekijk Fiverr-profiel" },
-  el: { hire: "Προσλάβετέ με", tagline: "Ας αναπτύξουμε μαζί την επιχείρησή σας. Ο AJ είναι έτοιμος να μετατρέψει τις ιδέες σας σε αποτέλεσμα.", enquiry: "Στείλτε αίτημα έργου", send: "Αποστολή", fiverr: "Προφίλ Fiverr" },
-  tr: { hire: "Beni İşe Al", tagline: "İşinizi birlikte büyütelim. AJ, fikirlerinizi etkiye dönüştürmeye hazır.", enquiry: "Proje talebi gönder", send: "Gönder", fiverr: "Fiverr Profilini Gör" },
-  it: { hire: "Assumimi", tagline: "Facciamo crescere il tuo business insieme. AJ è pronto a trasformare le tue idee in impatto.", enquiry: "Invia una richiesta di progetto", send: "Invia richiesta", fiverr: "Vedi profilo Fiverr" },
-};
 
 function Stars({ count = 5 }: { count?: number }) {
   return (
@@ -119,8 +185,8 @@ function Index() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [lang, setLang] = useState<Lang>("en");
   const [showScroll, setShowScroll] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-  const t = T[lang];
 
   useEffect(() => {
     const saved = (localStorage.getItem("theme") as "light" | "dark") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
@@ -138,6 +204,15 @@ function Index() {
       GR: "el", CY: "el",
       TR: "tr",
       IT: "it", SM: "it", VA: "it",
+      CN: "zh-CN", TW: "zh-CN", HK: "zh-CN", SG: "zh-CN",
+      IN: "hi", BD: "bn", PK: "ur", ID: "id",
+      DE: "de", AT: "de", CH: "de",
+      JP: "ja", KR: "ko", TH: "th", VN: "vi",
+      RU: "ru", UA: "uk", PL: "pl", RO: "ro", HU: "hu", CZ: "cs",
+      IR: "fa", AF: "fa",
+      SA: "ar", AE: "ar", EG: "ar", MA: "ar", DZ: "ar", QA: "ar", KW: "ar", JO: "ar", IQ: "ar", LB: "ar", OM: "ar", TN: "ar",
+      KE: "sw", TZ: "sw", UG: "sw",
+      PT: "pt", BR: "pt", AO: "pt", MZ: "pt",
     };
     fetch("https://ipapi.co/json/")
       .then(r => r.ok ? r.json() : null)
@@ -154,7 +229,45 @@ function Index() {
     document.documentElement.classList.toggle("dark", theme === "dark");
     localStorage.setItem("theme", theme);
   }, [theme]);
-  useEffect(() => { localStorage.setItem("lang", lang); }, [lang]);
+  // Inject Google Translate once, then translate when lang changes
+  useEffect(() => {
+    if (document.getElementById("google-translate-script")) return;
+    (window as unknown as { googleTranslateElementInit?: () => void }).googleTranslateElementInit = () => {
+      const G = (window as unknown as { google?: { translate?: { TranslateElement?: new (opts: object, el: string) => void; TranslateElement_Auto?: unknown } } }).google;
+      const Ctor = G?.translate?.TranslateElement as unknown as (new (o: object, e: string) => void) | undefined;
+      if (Ctor) new Ctor({ pageLanguage: "en", autoDisplay: false }, "google_translate_element");
+    };
+    const s = document.createElement("script");
+    s.id = "google-translate-script";
+    s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    s.async = true;
+    document.body.appendChild(s);
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("lang", lang);
+    // Set Google Translate cookie + trigger combo, fallback to cookie+reload
+    const setCookie = (val: string) => {
+      const host = window.location.hostname;
+      const root = host.split(".").slice(-2).join(".");
+      document.cookie = `googtrans=${val}; path=/`;
+      document.cookie = `googtrans=${val}; path=/; domain=.${host}`;
+      document.cookie = `googtrans=${val}; path=/; domain=.${root}`;
+    };
+    const trigger = () => {
+      const sel = document.querySelector<HTMLSelectElement>(".goog-te-combo");
+      if (!sel) return false;
+      sel.value = lang === "en" ? "" : lang;
+      sel.dispatchEvent(new Event("change"));
+      return true;
+    };
+    setCookie(lang === "en" ? "/en/en" : `/en/${lang}`);
+    // try a few times until widget is mounted
+    let tries = 0;
+    const id = setInterval(() => {
+      if (trigger() || ++tries > 20) clearInterval(id);
+    }, 250);
+    return () => clearInterval(id);
+  }, [lang]);
   useEffect(() => {
     const onScroll = () => setShowScroll(window.scrollY > 300);
     window.addEventListener("scroll", onScroll, { passive: true });
