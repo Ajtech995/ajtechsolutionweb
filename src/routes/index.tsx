@@ -413,17 +413,14 @@ function Index() {
         <div className="mx-auto max-w-6xl px-5">
           <SectionHeading eyebrow="Featured Work" title="Recent Projects" subtitle="A few stores I've built and scaled for clients worldwide." />
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map(p => (
+            {(showAllProjects ? projects : projects.slice(0, 10)).map(p => (
               <article key={p.title} className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm hover:shadow-soft transition-shadow">
                 <div className="aspect-[4/3] overflow-hidden bg-muted">
                   <img src={p.img} alt={p.title} loading="lazy" width={1024} height={768} className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
                 </div>
                 <div className="p-5">
                   <h3 className="text-base font-bold">{p.title}</h3>
-                  <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
-                  <div className="mt-4 flex items-center gap-2 rounded-lg bg-accent/60 px-3 py-2 text-xs font-semibold text-primary-dark">
-                    <TrendingUp className="size-4" /> {p.result}
-                  </div>
+                  <p className="mt-1.5 text-xs text-muted-foreground break-all">{new URL(p.url).hostname.replace(/^www\./, "")}</p>
                   <a href={p.url} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline">
                     <Globe className="size-3.5" /> Visit live store
                   </a>
@@ -431,6 +428,17 @@ function Index() {
               </article>
             ))}
           </div>
+          {projects.length > 10 && (
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={() => setShowAllProjects(v => !v)}
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-card-foreground hover:border-primary hover:text-primary transition-colors"
+              >
+                {showAllProjects ? "Show less" : `See more (${projects.length - 10})`}
+                <ChevronDown className={`size-4 transition-transform ${showAllProjects ? "rotate-180" : ""}`} />
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -560,7 +568,7 @@ function Index() {
             }}
             className="lg:col-span-3 rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-4 shadow-soft"
           >
-            <h3 className="text-lg font-bold">{t.enquiry}</h3>
+            <h3 className="text-lg font-bold">Send a project enquiry</h3>
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Name" name="name" placeholder="Your full name" required />
               <Field label="Email" name="email" type="email" placeholder="you@company.com" required />
@@ -573,7 +581,7 @@ function Index() {
             <button type="submit" disabled={formStatus === "sending"} className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary-dark px-6 py-3.5 text-sm font-semibold text-primary-foreground hover:bg-primary transition-colors shadow-soft disabled:opacity-70">
               {formStatus === "sending" ? (<><Loader2 className="size-4 animate-spin" /> Sending…</>) :
                formStatus === "sent" ? (<><Check className="size-4" /> Message sent!</>) :
-               (<>{t.send} <ArrowRight className="size-4" /></>)}
+               (<>Send Enquiry <ArrowRight className="size-4" /></>)}
             </button>
             {formStatus === "sent" && (
               <p className="text-center text-xs text-primary font-medium">Thanks! Your message was delivered to {EMAIL}. I'll reply within 1 hour.</p>
