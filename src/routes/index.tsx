@@ -80,7 +80,6 @@ const PROJECT_URLS = [
   "https://itokri.com/",
   "https://www.clubllondon.ae/",
   "https://bprimal.com.au/",
-  "https://www.netlingeri.dk/",
 ];
 function titleFromUrl(u: string) {
   const host = new URL(u).hostname.replace(/^www\./, "").replace(/^(shop|store|checkout|ecommerce|eu|uk|us|ca|au|fr|de|nl|mx|br|es|ch)\./, "");
