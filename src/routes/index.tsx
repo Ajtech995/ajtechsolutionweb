@@ -5,7 +5,7 @@ import {
   Palette, Plug, Search, TrendingUp, Megaphone, ArrowRight, Mail,
   Instagram, MessageCircle, ExternalLink, Globe, ChevronDown, Sun, Moon, ArrowUp, ArrowDown, Check, Loader2,
 } from "lucide-react";
-import profileImg from "@/assets/profile-aj.jpeg";
+import profileImgAsset from "@/assets/profile-aj.jpg.asset.json";
 import r1 from "@/assets/review-1.jpg";
 import r2 from "@/assets/review-2.jpg";
 import r3 from "@/assets/review-3.jpg";
@@ -322,11 +322,11 @@ function Index() {
           <div className="relative mx-auto size-40 sm:size-48">
             <div className="absolute inset-0 rounded-full bg-primary/15 blur-2xl" />
             <img
-              src={profileImg}
+              src={profileImgAsset.url}
               alt="AJ Tech Solutions founder portrait"
               width={384}
               height={384}
-              className="relative size-full rounded-full object-cover ring-4 ring-white shadow-soft"
+              className="relative size-full rounded-full object-contain bg-white ring-4 ring-white shadow-soft"
             />
             <div className="absolute bottom-1 right-1 grid size-11 place-items-center rounded-full bg-primary text-primary-foreground ring-4 ring-white">
               <BadgeCheck className="size-6" />
