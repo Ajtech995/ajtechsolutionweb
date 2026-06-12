@@ -198,6 +198,7 @@ function Index() {
   const [lang, setLang] = useState<Lang>("en");
   const [showScroll, setShowScroll] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [showAllReviews, setShowAllReviews] = useState(false);
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   useEffect(() => {
