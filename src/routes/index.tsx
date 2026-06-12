@@ -29,6 +29,8 @@ const services = [
 ];
 
 const shot = (url: string) => `https://image.thum.io/get/width/1200/crop/900/noanimate/${url}`;
+const favicon = (url: string) => `https://www.google.com/s2/favicons?domain=${encodeURIComponent(new URL(url).hostname)}&sz=128`;
+const avatar = (name: string) => `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff&size=128`;
 const PROJECT_URLS = [
   "https://freckledpoppy.com/",
   "https://yourstarter.ch/",
