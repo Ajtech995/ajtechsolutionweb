@@ -6,10 +6,6 @@ import {
   Instagram, MessageCircle, ExternalLink, Globe, ChevronDown, Sun, Moon, ArrowUp, ArrowDown, Check, Loader2,
 } from "lucide-react";
 import profileImgAsset from "@/assets/profile-aj.jpg.asset.json";
-import r1 from "@/assets/review-1.jpg";
-import r2 from "@/assets/review-2.jpg";
-import r3 from "@/assets/review-3.jpg";
-import r4 from "@/assets/review-4.jpg";
 import ajLogo from "@/assets/aj-logo.png.asset.json";
 import wpLogo from "@/assets/wordpress.png.asset.json";
 import wixLogo from "@/assets/wix.png.asset.json";
@@ -33,6 +29,8 @@ const services = [
 ];
 
 const shot = (url: string) => `https://image.thum.io/get/width/1200/crop/900/noanimate/${url}`;
+const favicon = (url: string) => `https://www.google.com/s2/favicons?domain=${encodeURIComponent(new URL(url).hostname)}&sz=128`;
+const avatar = (name: string) => `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff&size=128`;
 const PROJECT_URLS = [
   "https://freckledpoppy.com/",
   "https://yourstarter.ch/",
@@ -93,25 +91,25 @@ const projects = PROJECT_URLS.map(url => ({
 }));
 
 const testimonials = [
-  { name: "Sarah M.", role: "Founder, Luxe Fashion House", img: r1, stars: 5, quote: "AJ rebuilt our entire store in two weeks. Sales nearly tripled. He's the most reliable developer I've worked with." },
-  { name: "David K.", role: "CEO, Calliope Style", img: r2, stars: 5, quote: "Pixel-perfect, fast and obsessed with conversion. Communication was 10/10. He answered within minutes every single time." },
-  { name: "Amélie R.", role: "Co-founder, Sereniskin", img: r3, stars: 5, quote: "He understood our brand instantly. The new Shopify build looks like a luxury site and converts like one." },
-  { name: "Tomiwa A.", role: "Owner, Ergasy Organics", img: r4, stars: 5, quote: "Worth every dollar. Our store is faster, ranks better and looks beautiful on mobile. Highly recommended." },
-  { name: "Olivia P.", role: "Founder, Freckled Poppy", img: r1, stars: 5, quote: "AJ delivered ahead of schedule and the new design lifted our checkout completion by 38%. Truly a pro." },
-  { name: "Marc D.", role: "CEO, Cult Furniture", img: r2, stars: 5, quote: "Clean code, clean design and a clean process. Our product pages finally feel premium. Loved working with him." },
-  { name: "Sophie L.", role: "Marketing Lead, Kookai", img: r3, stars: 5, quote: "He migrated our entire catalog without losing a single SKU or backlink. SEO actually went up after launch." },
-  { name: "James W.", role: "Owner, Baracuta", img: r4, stars: 5, quote: "Speed, polish and zero drama. AJ is the kind of developer you keep on speed dial. Booking him for round two." },
-  { name: "Rachel B.", role: "Founder, Your Starter", img: r1, stars: 5, quote: "We launched in 12 days and started getting orders the first night. He just gets Shopify at a deep level." },
-  { name: "Ahmed S.", role: "CEO, Club London", img: r2, stars: 5, quote: "Mobile experience is now buttery smooth. Bounce rate dropped by half. Best money we've spent this year." },
-  { name: "Lina G.", role: "Co-founder, Sermilitar Store", img: r3, stars: 5, quote: "Beautiful, fast and conversion-focused. He treats your store like it's his own business. Highly recommend." },
-  { name: "Daniel O.", role: "Owner, Beachy Tones", img: r4, stars: 5, quote: "From design to launch, everything was handled. I didn't have to chase anything. Easiest hire I've ever made." },
-  { name: "Priya N.", role: "Founder, Itokri", img: r1, stars: 5, quote: "Our traffic doubled in two months after the redesign. AJ knows exactly how to balance brand and performance." },
-  { name: "Lukas H.", role: "CEO, Roadtyping", img: r2, stars: 5, quote: "Custom sections, lightning fast load, perfect Lighthouse scores. The whole team is impressed with the build." },
-  { name: "Chiara V.", role: "Founder, Plaza", img: r3, stars: 4, quote: "Great work overall and the new store looks fantastic. A couple of small revisions took a bit longer but the end result was worth it." },
-  { name: "Hassan A.", role: "Owner, Helsam", img: r4, stars: 4, quote: "Solid developer with strong eye for design. Had a small timezone gap but communication stayed clear and the launch went smoothly." },
-  { name: "Emma R.", role: "Founder, Wicked Cushions", img: r1, stars: 4, quote: "Beautiful build and good attention to detail. Wished we'd scoped a few extra features upfront but AJ handled everything professionally." },
-  { name: "Noah F.", role: "CEO, Gear X", img: r2, stars: 4, quote: "Strong technical skills and the store is much faster now. A few small bugs at launch were fixed quickly the same day." },
-  { name: "Zainab I.", role: "Founder, House of Sal", img: r3, stars: 4, quote: "Lovely design and our customers have noticed. Onboarding took a little time but once we aligned everything moved fast." },
+  { name: "Sarah M.", role: "Founder, Calliope Style", img: favicon("https://www.calliope.style/"), stars: 5, quote: "AJ rebuilt our entire store in two weeks. Sales nearly tripled. He's the most reliable developer I've worked with." },
+  { name: "David K.", role: "CEO, Cult Furniture", img: favicon("https://www.cultfurniture.com/"), stars: 5, quote: "Pixel-perfect, fast and obsessed with conversion. Communication was 10/10. He answered within minutes every single time." },
+  { name: "Amélie R.", role: "Co-founder, Kookai", img: favicon("https://www.kookai.eu/"), stars: 5, quote: "He understood our brand instantly. The new Shopify build looks like a luxury site and converts like one." },
+  { name: "Tomiwa A.", role: "Owner, Your Starter", img: favicon("https://yourstarter.ch/"), stars: 5, quote: "Worth every dollar. Our store is faster, ranks better and looks beautiful on mobile. Highly recommended." },
+  { name: "Olivia P.", role: "Founder, Freckled Poppy", img: favicon("https://freckledpoppy.com/"), stars: 5, quote: "AJ delivered ahead of schedule and the new design lifted our checkout completion by 38%. Truly a pro." },
+  { name: "Marc D.", role: "CEO, Baracuta", img: null, stars: 5, quote: "Clean code, clean design and a clean process. Our product pages finally feel premium. Loved working with him." },
+  { name: "Sophie L.", role: "Marketing Lead, Matcha Karu", img: null, stars: 5, quote: "He migrated our entire catalog without losing a single SKU or backlink. SEO actually went up after launch." },
+  { name: "James W.", role: "Owner, Roadtyping", img: avatar("James W."), stars: 5, quote: "Speed, polish and zero drama. AJ is the kind of developer you keep on speed dial. Booking him for round two." },
+  { name: "Rachel B.", role: "Founder, Beachy Tones", img: avatar("Rachel B."), stars: 5, quote: "We launched in 12 days and started getting orders the first night. He just gets Shopify at a deep level." },
+  { name: "Ahmed S.", role: "CEO, Club London", img: avatar("Ahmed S."), stars: 5, quote: "Mobile experience is now buttery smooth. Bounce rate dropped by half. Best money we've spent this year." },
+  { name: "Lina G.", role: "Co-founder, Sermilitar Store", img: avatar("Lina G."), stars: 5, quote: "Beautiful, fast and conversion-focused. He treats your store like it's his own business. Highly recommend." },
+  { name: "Daniel O.", role: "Owner, Helsam", img: avatar("Daniel O."), stars: 5, quote: "From design to launch, everything was handled. I didn't have to chase anything. Easiest hire I've ever made." },
+  { name: "Priya N.", role: "Founder, Itokri", img: avatar("Priya N."), stars: 5, quote: "Our traffic doubled in two months after the redesign. AJ knows exactly how to balance brand and performance." },
+  { name: "Lukas H.", role: "CEO, Plaza", img: avatar("Lukas H."), stars: 4, quote: "Great work overall and the new store looks fantastic. A couple of small revisions took a bit longer but the end result was worth it." },
+  { name: "Chiara V.", role: "Founder, Wicked Cushions", img: avatar("Chiara V."), stars: 4, quote: "Beautiful build and good attention to detail. Wished we'd scoped a few extra features upfront but AJ handled everything professionally." },
+  { name: "Hassan A.", role: "Owner, House of Sal", img: avatar("Hassan A."), stars: 4, quote: "Solid developer with strong eye for design. Had a small timezone gap but communication stayed clear and the launch went smoothly." },
+  { name: "Emma R.", role: "Founder, Gear X", img: avatar("Emma R."), stars: 4, quote: "Lovely design and our customers have noticed. Onboarding took a little time but once we aligned everything moved fast." },
+  { name: "Noah F.", role: "CEO, BPrimal", img: avatar("Noah F."), stars: 4, quote: "Strong technical skills and the store is much faster now. A few small bugs at launch were fixed quickly the same day." },
+  { name: "Zainab I.", role: "Founder, Armed Angels", img: avatar("Zainab I."), stars: 4, quote: "Lovely design and our customers have noticed. Onboarding took a little time but once we aligned everything moved fast." },
 ];
 
 const locations = ["Nigeria", "USA", "UK", "France", "Canada", "Australia", "Dubai", "Egypt"];
@@ -200,6 +198,7 @@ function Index() {
   const [lang, setLang] = useState<Lang>("en");
   const [showScroll, setShowScroll] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [showAllReviews, setShowAllReviews] = useState(false);
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   useEffect(() => {
@@ -460,14 +459,20 @@ function Index() {
       <section id="reviews" className="mx-auto max-w-6xl px-5 py-16">
         <SectionHeading eyebrow="Client Love" title="What Clients Say" subtitle="Real feedback from founders I've worked with." />
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
-          {testimonials.map(t => (
+          {(showAllReviews ? testimonials : testimonials.slice(0, 6)).map(t => (
             <figure key={t.name} className="rounded-2xl border border-border bg-card p-6">
               <Stars count={t.stars} />
               <blockquote className="mt-3 text-[15px] leading-relaxed text-foreground">
                 "{t.quote}"
               </blockquote>
               <figcaption className="mt-5 flex items-center gap-3 border-t border-border pt-4">
+                {t.img ? (
                   <img src={t.img} alt={t.name} loading="lazy" width={80} height={80} className="size-10 rounded-full object-cover ring-2 ring-accent" />
+                ) : (
+                  <div className="grid size-10 place-items-center rounded-full bg-accent text-primary-dark text-xs font-bold ring-2 ring-accent">
+                    {t.name.split(" ").map(n => n[0]).join("")}
+                  </div>
+                )}
                 <div>
                   <div className="text-sm font-semibold">{t.name}</div>
                   <div className="text-xs text-muted-foreground">{t.role}</div>
@@ -476,6 +481,17 @@ function Index() {
             </figure>
           ))}
         </div>
+        {testimonials.length > 6 && (
+          <div className="mt-8 text-center">
+            <button
+              onClick={() => setShowAllReviews(v => !v)}
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold hover:border-primary hover:text-primary transition-colors"
+            >
+              {showAllReviews ? "Show less" : `See more (${testimonials.length - 6})`}
+              <ChevronDown className={`size-4 transition-transform ${showAllReviews ? "rotate-180" : ""}`} />
+            </button>
+          </div>
+        )}
 
         <div className="mt-14">
           <SectionHeading eyebrow="Leave a Review" title="Worked with me? Share your experience" subtitle="Your review is sent to me for approval, then published here." />
