@@ -459,14 +459,20 @@ function Index() {
       <section id="reviews" className="mx-auto max-w-6xl px-5 py-16">
         <SectionHeading eyebrow="Client Love" title="What Clients Say" subtitle="Real feedback from founders I've worked with." />
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
-          {testimonials.map(t => (
+          {(showAllReviews ? testimonials : testimonials.slice(0, 6)).map(t => (
             <figure key={t.name} className="rounded-2xl border border-border bg-card p-6">
               <Stars count={t.stars} />
               <blockquote className="mt-3 text-[15px] leading-relaxed text-foreground">
                 "{t.quote}"
               </blockquote>
               <figcaption className="mt-5 flex items-center gap-3 border-t border-border pt-4">
+                {t.img ? (
                   <img src={t.img} alt={t.name} loading="lazy" width={80} height={80} className="size-10 rounded-full object-cover ring-2 ring-accent" />
+                ) : (
+                  <div className="grid size-10 place-items-center rounded-full bg-accent text-primary-dark text-xs font-bold ring-2 ring-accent">
+                    {t.name.split(" ").map(n => n[0]).join("")}
+                  </div>
+                )}
                 <div>
                   <div className="text-sm font-semibold">{t.name}</div>
                   <div className="text-xs text-muted-foreground">{t.role}</div>
@@ -475,6 +481,17 @@ function Index() {
             </figure>
           ))}
         </div>
+        {testimonials.length > 6 && (
+          <div className="mt-8 text-center">
+            <button
+              onClick={() => setShowAllReviews(v => !v)}
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold hover:border-primary hover:text-primary transition-colors"
+            >
+              {showAllReviews ? "Show less" : `See more (${testimonials.length - 6})`}
+              <ChevronDown className={`size-4 transition-transform ${showAllReviews ? "rotate-180" : ""}`} />
+            </button>
+          </div>
+        )}
 
         <div className="mt-14">
           <SectionHeading eyebrow="Leave a Review" title="Worked with me? Share your experience" subtitle="Your review is sent to me for approval, then published here." />
