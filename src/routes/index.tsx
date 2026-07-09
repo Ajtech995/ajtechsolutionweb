@@ -112,7 +112,7 @@ const testimonials = [
   { name: "Zainab I.", role: "Founder, Armed Angels", img: avatar("Zainab I."), stars: 4, quote: "Lovely design and our customers have noticed. Onboarding took a little time but once we aligned everything moved fast." },
 ];
 
-const locations = ["Nigeria", "USA", "UK", "France", "Canada", "Australia", "Dubai", "Egypt"];
+const locations = ["UK", "USA", "France", "Canada", "Australia", "Dubai", "Egypt"];
 const langs = ["English", "Spanish", "French", "Arabic", "Chinese", "Hindi", "Portuguese", "German"];
 const navLinks = [
   { href: "#services", label: "Services" },
